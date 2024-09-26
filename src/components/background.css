@@ -4,7 +4,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: radial-gradient(circle, #1e3a8a, #4c1d95); /* dégradé bleu marine/violet */
+    background: radial-gradient(circle, #1e3a8a, #4c1d95);
     overflow: hidden;
     z-index: -2;
 }
