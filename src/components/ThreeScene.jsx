@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import * as THREE from 'three';
-import { OBJLoader } from 'three-stdlib';
+import { OBJLoader, MTLLoader } from 'three-stdlib';
 
 const ThreeScene = () => {
     const mountRef = useRef(null);
@@ -20,20 +20,64 @@ const ThreeScene = () => {
 
         let object; // Variable pour stocker le modèle
 
-        const loader = new OBJLoader();
-        loader.load('/chlorate.obj', (loadedObject) => {
-            object = loadedObject; // Stocke le modèle pour pouvoir le manipuler
-            scene.add(object);
-            object.position.y = -1;
+        // Charger les matériaux avec MTLLoader
+        const mtlLoader = new MTLLoader();
+        mtlLoader.load('/chlorate-material.mtl', (materials) => {
+            materials.preload();
+
+            const objLoader = new OBJLoader();
+            objLoader.setMaterials(materials);
+            objLoader.load('/chlorate.obj', (loadedObject) => {
+                object = loadedObject;
+                scene.add(object);
+                object.position.y = -1;
+
+                // Charger les textures après le chargement du modèle
+                const textureLoader = new THREE.TextureLoader();
+                const roughnessMap = textureLoader.load('/model_0_roughness.png', () => applyTextures());
+                const metalnessMap = textureLoader.load('/model_0_metallic.png', () => applyTextures());
+                const colorMap = textureLoader.load('/model_0_color.png', () => applyTextures());
+                const transmissionMap = textureLoader.load('/model_0_transmittance.png', () => applyTextures());
+
+                // Fonction pour appliquer les textures
+                const applyTextures = () => {
+                    object.traverse((child) => {
+                        if (child.isMesh) {
+                            // Vérifier si le matériau est MeshPhysicalMaterial pour la transmission
+                            if (child.material instanceof THREE.MeshPhysicalMaterial) {
+                                child.material.roughnessMap = roughnessMap;
+                                child.material.metalnessMap = metalnessMap;
+                                child.material.map = colorMap;  // Texture de base
+                                child.material.transmissionMap = transmissionMap;  // Carte de transmission
+                                child.material.transmission = 0.8;  // Activer la transmission
+
+                                child.material.needsUpdate = true;
+                            } else {
+                                // Convertir en MeshPhysicalMaterial si nécessaire
+                                const newMaterial = new THREE.MeshPhysicalMaterial({
+                                    map: colorMap,
+                                    roughnessMap: roughnessMap,
+                                    metalnessMap: metalnessMap,
+                                    transmissionMap: transmissionMap,
+                                    transmission: 0.8,
+                                    metalness: 0.5, // Ajuste selon tes besoins
+                                    roughness: 0.5, // Ajuste selon tes besoins
+                                });
+                                child.material = newMaterial;
+                                child.material.needsUpdate = true;
+                            }
+                        }
+                    });
+                };
+            });
         });
 
         // Animation
         const animate = () => {
             requestAnimationFrame(animate);
-
-            // Si l'objet est chargé, on lui applique une rotation
             if (object) {
-                object.rotation.y += 0.01; // Rotation sur l'axe Y
+                object.rotation.y += 0.005;
+                object.rotation.z += 0.005;
             }
 
             renderer.render(scene, camera);
@@ -41,7 +85,6 @@ const ThreeScene = () => {
 
         animate();
 
-        // Nettoyage lors du démontage du composant
         return () => {
             mountRef.current.removeChild(renderer.domElement);
         };
