@@ -49,7 +49,7 @@ const ThreeScene = () => {
                                 child.material.metalnessMap = metalnessMap;
                                 child.material.map = colorMap;  // Texture de base
                                 child.material.transmissionMap = transmissionMap;  // Carte de transmission
-                                child.material.transmission = 0.8;  // Activer la transmission
+                                child.material.transmission = 1;  // Activer la transmission
 
                                 child.material.needsUpdate = true;
                             } else {
@@ -79,7 +79,6 @@ const ThreeScene = () => {
                 object.rotation.y += 0.005;
                 object.rotation.z += 0.005;
             }
-
             renderer.render(scene, camera);
         };
 
