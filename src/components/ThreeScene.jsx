@@ -1,6 +1,6 @@
-import React, { useEffect, useRef } from 'react';
+import React, {useEffect, useRef} from 'react';
 import * as THREE from 'three';
-import { OBJLoader, MTLLoader } from 'three-stdlib';
+import {MTLLoader, OBJLoader, RGBELoader} from 'three-stdlib'; // Ajout de RGBELoader
 
 const ThreeScene = () => {
     const mountRef = useRef(null);
@@ -12,17 +12,19 @@ const ThreeScene = () => {
 
         const renderer = new THREE.WebGLRenderer();
         renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.toneMapping = THREE.ACESFilmicToneMapping; // Tonemapping pour HDR
+        renderer.toneMappingExposure = 0.3;
         mountRef.current.appendChild(renderer.domElement);
 
-        const directionalLight1 = new THREE.DirectionalLight(0xffffff, 2);
-        const directionalLight2 = new THREE.DirectionalLight(0xffffff, 2);
-
-        directionalLight1.position.set(1, 1, 1).normalize();
-        directionalLight2.position.set(1, 1, -8).normalize();
-        scene.add(directionalLight1);
-        scene.add(directionalLight2);
 
         let object; // Variable pour stocker le modèle
+
+        // Charger l'environnement HDR
+        const rgbeLoader = new RGBELoader();
+        rgbeLoader.load('/sky.hdr', (hdrTexture) => {
+            hdrTexture.mapping = THREE.EquirectangularReflectionMapping; // Pour l'utiliser en réflexion
+            scene.environment = hdrTexture;
+        });
 
         // Charger les matériaux avec MTLLoader
         const mtlLoader = new MTLLoader();
@@ -47,27 +49,23 @@ const ThreeScene = () => {
                 const applyTextures = () => {
                     object.traverse((child) => {
                         if (child.isMesh) {
-                            // Vérifier si le matériau est MeshPhysicalMaterial pour la transmission
                             if (child.material instanceof THREE.MeshPhysicalMaterial) {
                                 child.material.roughnessMap = roughnessMap;
                                 child.material.metalnessMap = metalnessMap;
-                                child.material.map = colorMap;  // Texture de base
-                                child.material.transmissionMap = transmissionMap;  // Carte de transmission
-                                child.material.transmission = 1;  // Activer la transmission
-
+                                child.material.map = colorMap;
+                                child.material.transmissionMap = transmissionMap;
+                                child.material.transmission = 0.5;
                                 child.material.needsUpdate = true;
                             } else {
-                                // Convertir en MeshPhysicalMaterial si nécessaire
-                                const newMaterial = new THREE.MeshPhysicalMaterial({
+                                child.material = new THREE.MeshPhysicalMaterial({
                                     map: colorMap,
                                     roughnessMap: roughnessMap,
                                     metalnessMap: metalnessMap,
                                     transmissionMap: transmissionMap,
                                     transmission: 0.8,
-                                    metalness: 0.5, // Ajuste selon tes besoins
-                                    roughness: 0.5, // Ajuste selon tes besoins
+                                    metalness: 0.5,
+                                    roughness: 0.8,
                                 });
-                                child.material = newMaterial;
                                 child.material.needsUpdate = true;
                             }
                         }
@@ -80,8 +78,8 @@ const ThreeScene = () => {
         const animate = () => {
             requestAnimationFrame(animate);
             if (object) {
-                object.rotation.y += 0.005;
-                object.rotation.z += 0.005;
+                object.rotation.y += 0.002;
+                object.rotation.z += 0.002;
             }
             renderer.render(scene, camera);
         };
