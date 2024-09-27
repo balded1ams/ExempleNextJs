@@ -1,6 +1,6 @@
-import React, {useEffect, useRef} from 'react';
+import React, { useEffect, useRef } from 'react';
 import * as THREE from 'three';
-import {MTLLoader, OBJLoader, RGBELoader} from 'three-stdlib'; // Ajout de RGBELoader
+import { MTLLoader, OBJLoader, AsciiEffect } from 'three-stdlib';
 
 const ThreeScene = () => {
     const mountRef = useRef(null);
@@ -8,23 +8,28 @@ const ThreeScene = () => {
     useEffect(() => {
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        camera.position.z = 200;
+        camera.position.z = 300;
 
         const renderer = new THREE.WebGLRenderer();
         renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.toneMapping = THREE.ACESFilmicToneMapping; // Tonemapping pour HDR
-        renderer.toneMappingExposure = 0.3;
-        mountRef.current.appendChild(renderer.domElement);
 
+        // Ajout de l'AsciiEffect avec l'option couleur activée
+        const asciiEffect = new AsciiEffect(renderer, ' .:-+*=%@#', { invert: true, color: true }); // ASCII avec rendu couleur
+        asciiEffect.setSize(window.innerWidth, window.innerHeight);
 
-        let object; // Variable pour stocker le modèle
+        // Ajout de l'AsciiEffect DOM au lieu de renderer.domElement
+        mountRef.current.appendChild(asciiEffect.domElement);
 
-        // Charger l'environnement HDR
-        const rgbeLoader = new RGBELoader();
-        rgbeLoader.load('/sky.hdr', (hdrTexture) => {
-            hdrTexture.mapping = THREE.EquirectangularReflectionMapping; // Pour l'utiliser en réflexion
-            scene.environment = hdrTexture;
-        });
+        let object;
+
+        // Lumière ambiante qui éclaire toute la scène
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.7); // Lumière douce
+        scene.add(ambientLight);
+
+        // Lumière directionnelle depuis le côté
+        const directionalLight2 = new THREE.DirectionalLight(0xffffff, 1);
+        directionalLight2.position.set(-1, -1, 1).normalize(); // Autre source pour les reflets
+        scene.add(directionalLight2);
 
         // Charger les matériaux avec MTLLoader
         const mtlLoader = new MTLLoader();
@@ -64,7 +69,7 @@ const ThreeScene = () => {
                                     transmissionMap: transmissionMap,
                                     transmission: 0.8,
                                     metalness: 0.5,
-                                    roughness: 0.8,
+                                    roughness: 0.5,
                                 });
                                 child.material.needsUpdate = true;
                             }
@@ -78,16 +83,19 @@ const ThreeScene = () => {
         const animate = () => {
             requestAnimationFrame(animate);
             if (object) {
-                object.rotation.y += 0.002;
-                object.rotation.z += 0.002;
+                object.rotation.y += 0.005;
+                object.rotation.z += 0.005;
             }
-            renderer.render(scene, camera);
+            asciiEffect.render(scene, camera); // Rendu en ASCII avec couleur
         };
 
         animate();
 
+        // Nettoyage du DOM à la fin
         return () => {
-            mountRef.current.removeChild(renderer.domElement);
+            if (mountRef.current) {
+                mountRef.current.removeChild(asciiEffect.domElement);
+            }
         };
     }, []);
 
