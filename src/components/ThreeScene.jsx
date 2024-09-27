@@ -42,6 +42,7 @@ const ThreeScene = () => {
                 object = loadedObject;
                 scene.add(object);
                 object.position.y = -1;
+                object.position.x = -200;
 
                 // Charger les textures après le chargement du modèle
                 const textureLoader = new THREE.TextureLoader();
