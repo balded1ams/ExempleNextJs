@@ -14,9 +14,13 @@ const ThreeScene = () => {
         renderer.setSize(window.innerWidth, window.innerHeight);
         mountRef.current.appendChild(renderer.domElement);
 
-        const directionalLight = new THREE.DirectionalLight(0xffffff, 2);
-        directionalLight.position.set(1, 1, 1).normalize();
-        scene.add(directionalLight);
+        const directionalLight1 = new THREE.DirectionalLight(0xffffff, 2);
+        const directionalLight2 = new THREE.DirectionalLight(0xffffff, 2);
+
+        directionalLight1.position.set(1, 1, 1).normalize();
+        directionalLight2.position.set(1, 1, -8).normalize();
+        scene.add(directionalLight1);
+        scene.add(directionalLight2);
 
         let object; // Variable pour stocker le modèle
 
