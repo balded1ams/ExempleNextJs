@@ -23,7 +23,7 @@ const ThreeScene = () => {
         let object;
 
         // Lumière ambiante qui éclaire toute la scène
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.7); // Lumière douce
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.9); // Lumière douce
         scene.add(ambientLight);
 
         // Lumière directionnelle depuis le côté
@@ -41,8 +41,7 @@ const ThreeScene = () => {
             objLoader.load('/chlorate.obj', (loadedObject) => {
                 object = loadedObject;
                 scene.add(object);
-                object.position.y = -1;
-                object.position.x = -200;
+                object.position.y = -25;
 
                 // Charger les textures après le chargement du modèle
                 const textureLoader = new THREE.TextureLoader();
@@ -51,7 +50,6 @@ const ThreeScene = () => {
                 const colorMap = textureLoader.load('/model_0_color.png', () => applyTextures());
                 const transmissionMap = textureLoader.load('/model_0_transmittance.png', () => applyTextures());
 
-                // Fonction pour appliquer les textures
                 const applyTextures = () => {
                     object.traverse((child) => {
                         if (child.isMesh) {
@@ -80,12 +78,28 @@ const ThreeScene = () => {
             });
         });
 
-        // Animation
+        const handleResize = () => {
+            const width = mountRef.current.clientWidth;
+            const height = mountRef.current.clientHeight;
+
+            renderer.setSize(width, height);
+            asciiEffect.setSize(width, height);
+
+            camera.aspect = width / height;
+            camera.updateProjectionMatrix();
+
+            camera.position.z = (width < 500) ? 350 : 250;
+        };
+
+        const resizeObserver = new ResizeObserver(handleResize);
+        resizeObserver.observe(mountRef.current);
+
+
         const animate = () => {
             requestAnimationFrame(animate);
             if (object) {
-                object.rotation.y += 0.005;
-                object.rotation.z += 0.005;
+                object.rotation.y += 0.01;
+                object.rotation.z += 0.01;
             }
             asciiEffect.render(scene, camera); // Rendu en ASCII avec couleur
         };
