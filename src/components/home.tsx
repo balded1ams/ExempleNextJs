@@ -31,7 +31,7 @@ const Home: React.FC = () => {
                             </CardHeader>
                             <CardBody className="flex justify-center items-center py-2 border-t-1 border-green-500">
                                 <h1>
-                                    Hey, I'm <span className="chlorate">Chlo<span className="rate">rate</span></span>
+                                    {'Hey, Im'} <span className="chlorate">Chlo<span className="rate">rate</span></span>
                                 </h1>
                             </CardBody>
                         </Card>
