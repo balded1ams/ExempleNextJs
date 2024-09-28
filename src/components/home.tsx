@@ -22,16 +22,16 @@ const Home: React.FC = () => {
     return (
         <div className="bg-slate-900">
             <Navbar/>
-            <div className="px-4 flex flex-col lg:flex-row">
+            <div className="px-4 flex flex-col lg:flex-row h-full">
 
                 <div className="w-full lg:w-1/2 overflow-visible mb-4 lg:mb-0">
                     <ThreeScene />
                 </div>
                 <div className="w-full lg:w-1/2border overflow-x-visible flex flex-col lg:flex-row">
                     <div className="w-full xl:w-3/4 px-2 mt-4">
-                        <Card isBlurred className="border bg-background/100 w-full mb-4">
+                        <Card isBlurred className="border rounded bg-background/100 w-full ml-[-50%] mb-4 card-shadow">
                             <CardHeader className="pb-0 pt-2 px-4 justify-between border-b">
-                                <h1 className="font-bold text-large">card</h1>
+                                <h1 className="font-bold text-lg">\NaClO4</h1>
                                 <div className="flex gap-1 pb-1.5 justify-between">
                                     <Minus size={16}/>
                                     <Square size={16}/>
@@ -39,14 +39,14 @@ const Home: React.FC = () => {
                                 </div>
                             </CardHeader>
                             <CardBody className="flex justify-center items-center py-2">
-                                <h1>
-                                    {'Hey, Im'} <span className="chlorate">Chlorate</span>
+                                <h1 className="text-3xl">
+                                    {'Hey, Im'} <span className="chlorate text-4xl">Chlorate</span>
                                 </h1>
                             </CardBody>
                         </Card>
                         <div>
-                            <Card isBlurred className="border w-1/2 bg-background/100 vhs-effect"
-                                  onMouseEnter={addVHSEffect} //effet vhs partout
+                            <Card isBlurred className="border rounded bg-background/100 vhs-effect card-shadow"
+                                  onMouseEnter={addVHSEffect}
                                   onMouseLeave={removeVHSEffect}>
                                 <CardHeader className="pb-0 pt-2 px-4 justify-between border-b">
                                     <h1 className="font-bold text-large">\cat </h1>
@@ -56,7 +56,7 @@ const Home: React.FC = () => {
                                         <X size={16}/>
                                     </div>
                                 </CardHeader>
-                                <CardBody className="flex justify-center items-center py-2 border-t-1 border-green-500">
+                                <CardBody className="flex justify-center items-center py-2">
                                     <pre className="font-mono whitespace-pre text-sm">
                                         ╱|、{'\n'}
                                         (˚ˎ。7{'\n'}

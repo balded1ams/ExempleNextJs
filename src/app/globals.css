@@ -19,11 +19,16 @@ body {
   background: var(--background);
   font-family: monospace, Helvetica, sans-serif;
 }
+.card-shadow:hover {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 10px 10px 0px 0px rgba(0, 0, 0, 0.4);
+}
 
 .chlorate {
   display: inline-block;
   position: relative;
-  font-size: 2rem;
   cursor: pointer;
 }
 
