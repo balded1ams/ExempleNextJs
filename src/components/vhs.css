@@ -1,0 +1,91 @@
+@keyframes glitch {
+    0% {
+        clip: rect(10px, 9999px, 150px, 0);
+        transform: skew(0.5deg);
+    }
+    5% {
+        clip: rect(45px, 9999px, 100px, 0);
+        transform: skew(1deg);
+    }
+    10% {
+        clip: rect(25px, 9999px, 70px, 0);
+        transform: skew(0.5deg);
+    }
+    15% {
+        clip: rect(40px, 9999px, 125px, 0);
+        transform: skew(1deg);
+    }
+    20% {
+        clip: rect(35px, 9999px, 80px, 0);
+        transform: skew(0.5deg);
+    }
+}
+
+@keyframes noise {
+    0%, 100% {
+        opacity: 0.1;
+    }
+    50% {
+        opacity: 0.3;
+    }
+}
+
+.vhs-effect {
+    position: relative;
+    overflow: hidden;
+}
+
+.vhs-effect:hover::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('https://64.media.tumblr.com/da60c13b478dda09ab90c27e880983b8/tumblr_nd4pwdPKdc1tun3l0o1_1280.gifv');
+    background-size: cover;
+    opacity: 0.4;
+    pointer-events: none;
+    animation: noise 0.2s infinite;
+}
+
+/*sur toute la page */
+.vhs-page-effect::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: url('https://64.media.tumblr.com/da60c13b478dda09ab90c27e880983b8/tumblr_nd4pwdPKdc1tun3l0o1_1280.gifv');
+    background-size: cover;
+    opacity: 0.2;
+    z-index: 9999;
+    pointer-events: none;
+    animation: noise 0.2s infinite;
+}
+
+.vhs-effect:hover .text {
+    animation: glitch 1s infinite;
+    position: relative;
+}
+
+.vhs-effect:hover .text:before,
+.vhs-effect:hover .text:after {
+    content: attr(data-text);
+    position: absolute;
+    left: 0;
+    right: 0;
+}
+
+.vhs-effect:hover .text:before {
+    top: -2px;
+    color: #ff00c1;
+    z-index: -1;
+}
+
+.vhs-effect:hover .text:after {
+    top: 2px;
+    color: #00fff9;
+    z-index: -1;
+}

@@ -4,12 +4,21 @@ import {Card, CardHeader, CardBody} from "@nextui-org/react";
 import {Minus, Square, X} from 'lucide-react';
 
 import ThreeScene from "@/components/ThreeScene";
-import Sword from "@/components/sword";
 import Navbar from "@/components/navbar";
 import './home.css';
+import './vhs.css'
 
 
 const Home: React.FC = () => {
+
+    const addVHSEffect = () => {
+        document.body.classList.add('vhs-page-effect');
+    };
+
+    const removeVHSEffect = () => {
+        document.body.classList.remove('vhs-page-effect');
+    };
+
     return (
         <div className="bg-slate-900">
             <Navbar/>
@@ -29,16 +38,18 @@ const Home: React.FC = () => {
                                     <X size={16}/>
                                 </div>
                             </CardHeader>
-                            <CardBody className="flex justify-center items-center py-2 border-t-1 border-green-500">
+                            <CardBody className="flex justify-center items-center py-2">
                                 <h1>
-                                    {'Hey, Im'} <span className="chlorate">Chlo<span className="rate">rate</span></span>
+                                    {'Hey, Im'} <span className="chlorate">Chlorate</span>
                                 </h1>
                             </CardBody>
                         </Card>
                         <div>
-                            <Card isBlurred className="border w-1/2 bg-background/100">
+                            <Card isBlurred className="border w-1/2 bg-background/100 vhs-effect"
+                                  onMouseEnter={addVHSEffect} //effet vhs partout
+                                  onMouseLeave={removeVHSEffect}>
                                 <CardHeader className="pb-0 pt-2 px-4 justify-between border-b">
-                                    <h1 className="font-bold text-large">i like cat </h1>
+                                    <h1 className="font-bold text-large">\cat </h1>
                                     <div className="flex gap-1 pb-1.5 justify-between">
                                         <Minus size={16}/>
                                         <Square size={16}/>
@@ -56,22 +67,6 @@ const Home: React.FC = () => {
                             </Card>
                         </div>
                     </div>
-                    <Card isBlurred className="border mt-4 mx-2 bg-background/100 w-full lg:w-1/4 h-fit">
-                        <CardHeader className="pb-0 pt-2 px-4 justify-between border-b">
-                            <h1 className="font-bold text-large">sword</h1>
-                            <div className="flex gap-1 pb-1.5 justify-between">
-                                <Minus size={16}/>
-                                <Square size={16}/>
-                                <X size={16}/>
-                            </div>
-                        </CardHeader>
-                        <CardBody className="flex justify-center items-center py-2 border-t-1 border-green-500">
-                            <Sword/>
-                            <p className="text-xs text-slate-700">
-                                by BLUEamnesiac
-                            </p>
-                        </CardBody>
-                    </Card>
                 </div>
             </div>
         </div>
