@@ -8,8 +8,6 @@ const ThreeScene = () => {
     useEffect(() => {
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        camera.position.z = 300;
-
         const renderer = new THREE.WebGLRenderer();
         renderer.setSize(window.innerWidth, window.innerHeight);
 
@@ -45,30 +43,17 @@ const ThreeScene = () => {
 
                 // Charger les textures après le chargement du modèle
                 const textureLoader = new THREE.TextureLoader();
-                const roughnessMap = textureLoader.load('/model_0_roughness.png', () => applyTextures());
-                const metalnessMap = textureLoader.load('/model_0_metallic.png', () => applyTextures());
                 const colorMap = textureLoader.load('/model_0_color.png', () => applyTextures());
-                const transmissionMap = textureLoader.load('/model_0_transmittance.png', () => applyTextures());
 
                 const applyTextures = () => {
                     object.traverse((child) => {
                         if (child.isMesh) {
                             if (child.material instanceof THREE.MeshPhysicalMaterial) {
-                                child.material.roughnessMap = roughnessMap;
-                                child.material.metalnessMap = metalnessMap;
                                 child.material.map = colorMap;
-                                child.material.transmissionMap = transmissionMap;
-                                child.material.transmission = 0.5;
                                 child.material.needsUpdate = true;
                             } else {
                                 child.material = new THREE.MeshPhysicalMaterial({
                                     map: colorMap,
-                                    roughnessMap: roughnessMap,
-                                    metalnessMap: metalnessMap,
-                                    transmissionMap: transmissionMap,
-                                    transmission: 0.8,
-                                    metalness: 0.5,
-                                    roughness: 0.5,
                                 });
                                 child.material.needsUpdate = true;
                             }
@@ -106,7 +91,6 @@ const ThreeScene = () => {
 
         animate();
 
-        // Nettoyage du DOM à la fin
         return () => {
             if (mountRef.current) {
                 mountRef.current.removeChild(asciiEffect.domElement);

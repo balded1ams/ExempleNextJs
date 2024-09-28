@@ -2,7 +2,7 @@ import React from "react";
 
 const Sword: React.FC = () => {
     return (
-        <pre className="font-mono whitespace-pre text-[5px]">
+        <pre className="font-mono whitespace-pre text-[5px] ml-[-35%]">
       {`                                    _
                                   .!=!.
                                   \\===/
@@ -16,7 +16,7 @@ const Sword: React.FC = () => {
                                   |>X<|
                                   |>X<|
                                   |>X<|
-                                  .-----.
+                                 .-----.
                              /\\__:-----:__/\\
                            ./ ._. \\.-./ ._. \\.
                          ./ ./  -.  V  .-  \\. \\
