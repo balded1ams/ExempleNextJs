@@ -12,7 +12,7 @@ const ThreeScene = () => {
         renderer.setSize(window.innerWidth, window.innerHeight);
 
         // Ajout de l'AsciiEffect avec l'option couleur activée
-        const asciiEffect = new AsciiEffect(renderer, ' .:-+*=%@#', { invert: true, color: true }); // ASCII avec rendu couleur
+        const asciiEffect = new AsciiEffect(renderer, ' .:-+*=%@#s', { invert: true, color: true }); // ASCII avec rendu couleur
         asciiEffect.setSize(window.innerWidth, window.innerHeight);
 
         // Ajout de l'AsciiEffect DOM au lieu de renderer.domElement
@@ -20,11 +20,10 @@ const ThreeScene = () => {
 
         let object;
 
-        // Lumière ambiante qui éclaire toute la scène
+        // Lumière ambiante
         const ambientLight = new THREE.AmbientLight(0xffffff, 0.9); // Lumière douce
         scene.add(ambientLight);
 
-        // Lumière directionnelle depuis le côté
         const directionalLight2 = new THREE.DirectionalLight(0xffffff, 1);
         directionalLight2.position.set(-1, -1, 1).normalize(); // Autre source pour les reflets
         scene.add(directionalLight2);
@@ -78,7 +77,6 @@ const ThreeScene = () => {
 
         const resizeObserver = new ResizeObserver(handleResize);
         resizeObserver.observe(mountRef.current);
-
 
         const animate = () => {
             requestAnimationFrame(animate);
