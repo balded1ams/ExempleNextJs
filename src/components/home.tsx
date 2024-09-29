@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 import {Card, CardHeader, CardBody} from "@nextui-org/react";
-import {Minus, Square, X} from 'lucide-react';
+import {Minus, Square, X, Videotape } from 'lucide-react';
 
 import ThreeScene from "@/components/ThreeScene";
 import Navbar from "@/components/navbar";
@@ -52,7 +52,19 @@ const Home: React.FC = () => {
                                 </h1>
                             </CardBody>
                         </Card>
+                        <Card isBlurred className="border rounded bg-background/100 card-shadow">
+                            <CardHeader className="pb-0 pt-2 px-4 justify-between border-b">
+                                <h1 className="font-bold text-lg">\parcour <Videotape/> </h1>
+                                <div className="flex gap-1 pb-1.5 justify-between">
+                                    <Minus size={16}/>
+                                    <Square size={16}/>
+                                    <X size={16}/>
+                                </div>
+                            </CardHeader>
+                            <CardBody className="flex justify-center items-center py-2">
 
+                            </CardBody>
+                        </Card>
                         <div>
                             <Card isBlurred className="border rounded bg-background/100 vhs-effect card-shadow"
                                   onMouseEnter={addVHSEffect}
@@ -67,7 +79,7 @@ const Home: React.FC = () => {
                                 </CardHeader>
                                 <CardBody className="flex justify-center items-center py-2">
                                     <pre className="font-mono whitespace-pre text-sm">
-                                        ╱|、{'\n'}
+                                         ╱|、{'\n'}
                                         (˚ˎ。7{'\n'}
                                         |、˜〵{'\n'}
                                         じしˍ,)ノ
