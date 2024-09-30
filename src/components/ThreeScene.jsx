@@ -11,24 +11,18 @@ const ThreeScene = () => {
         const renderer = new THREE.WebGLRenderer();
         renderer.setSize(window.innerWidth, window.innerHeight);
 
-        // Ajout de l'AsciiEffect avec l'option couleur activée
-        const asciiEffect = new AsciiEffect(renderer, ' .:-+*=%@#s', { invert: true, color: true }); // ASCII avec rendu couleur
+        const asciiEffect = new AsciiEffect(renderer, ' .:-+*=%@#s', { invert: true, color: true });
         asciiEffect.setSize(window.innerWidth, window.innerHeight);
-
-        // Ajout de l'AsciiEffect DOM au lieu de renderer.domElement
         mountRef.current.appendChild(asciiEffect.domElement);
 
         let object;
-
-        // Lumière ambiante
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.9); // Lumière douce
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.9);
         scene.add(ambientLight);
 
         const directionalLight2 = new THREE.DirectionalLight(0xffffff, 1);
-        directionalLight2.position.set(-1, -1, 1).normalize(); // Autre source pour les reflets
+        directionalLight2.position.set(-1, -1, 1).normalize();
         scene.add(directionalLight2);
 
-        // Charger les matériaux avec MTLLoader
         const mtlLoader = new MTLLoader();
         mtlLoader.load('/chlorate-material.mtl', (materials) => {
             materials.preload();
@@ -40,7 +34,6 @@ const ThreeScene = () => {
                 scene.add(object);
                 object.position.y = -25;
 
-                // Charger les textures après le chargement du modèle
                 const textureLoader = new THREE.TextureLoader();
                 const colorMap = textureLoader.load('/model_0_color.png', () => applyTextures());
 
@@ -65,31 +58,45 @@ const ThreeScene = () => {
         const handleResize = () => {
             const width = mountRef.current.clientWidth;
             const height = mountRef.current.clientHeight;
-
             renderer.setSize(width, height);
             asciiEffect.setSize(width, height);
-
             camera.aspect = width / height;
             camera.updateProjectionMatrix();
-
             camera.position.z = (width < 500) ? 350 : 250;
         };
 
         const resizeObserver = new ResizeObserver(handleResize);
         resizeObserver.observe(mountRef.current);
 
+        let animationId;
         const animate = () => {
-            requestAnimationFrame(animate);
+            animationId = requestAnimationFrame(animate);
             if (object) {
                 object.rotation.y += 0.01;
                 object.rotation.z += 0.01;
             }
-            asciiEffect.render(scene, camera); // Rendu en ASCII avec couleur
+            asciiEffect.render(scene, camera);
         };
 
         animate();
 
         return () => {
+            cancelAnimationFrame(animationId);
+            if (object) {
+                scene.remove(object);
+                object.traverse((child) => {
+                    if (child.isMesh) {
+                        child.geometry.dispose();
+                        if (Array.isArray(child.material)) {
+                            child.material.forEach((mtrl) => mtrl.dispose());
+                        } else {
+                            child.material.dispose();
+                        }
+                    }
+                });
+            }
+            renderer.dispose();
+            resizeObserver.disconnect();
             if (mountRef.current) {
                 mountRef.current.removeChild(asciiEffect.domElement);
             }

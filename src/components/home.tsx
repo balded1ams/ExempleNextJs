@@ -37,7 +37,7 @@ const Home: React.FC = () => {
                     <div className="flex w-full">
                         <div className="w-3/4 px-2">
                             {/* Card NaClO4 */}
-                            <Card className="border rounded bg-background/100 card-shadow"> {/* Added h-full */}
+                            <Card className="border rounded bg-background/100 card-shadow ">
                                 <CardHeader className="pb-0 pt-2 px-4 justify-between border-b">
                                     <h1 className="font-bold text-lg">\NaClO4</h1>
                                     <div className="flex gap-1 pb-1.5 justify-between">
@@ -55,7 +55,7 @@ const Home: React.FC = () => {
                         </div>
                         <div className="w-1/4 px-2">
                             {/* Card Chat */}
-                            <Card className="border rounded bg-background/100 card-shadow"> {/* Added h-full */}
+                            <Card className="border rounded bg-background/100 card-shadow">
                                 <CardHeader className="pb-0 pt-2 px-4 justify-between border-b">
                                     <h1 className="font-bold text-lg">\Cat</h1>
                                 </CardHeader>
@@ -76,7 +76,7 @@ const Home: React.FC = () => {
                         <div className="w-1/2 px-2">
                             {/* Autre Carte */}
                             <Card
-                                className="border rounded bg-background/100 max-w-full card-shadow h-full"> {/* Added h-full */}
+                                className="border rounded bg-background/100 max-w-full card-shadow ">
                                 <CardHeader className="pb-0 pt-2 px-4 justify-between border-b">
                                     <h1 className="font-bold text-lg">Autre Carte</h1>
                                 </CardHeader>
@@ -88,7 +88,7 @@ const Home: React.FC = () => {
                         <div className="w-1/2 px-2">
                             {/* Card Parcour */}
                             <Card isBlurred
-                                  className="border rounded bg-background/100 max-w-full card-shadow h-full"> {/* Added h-full */}
+                                  className="border rounded bg-background/100 max-w-full card-shadow ">
                                 <CardHeader className="pb-0 pt-2 px-4 justify-between border-b">
                                     <div className="flex items-center">
                                         <h1 className="font-bold text-lg mr-2">\parcour</h1>
