@@ -17,7 +17,6 @@ const Home: React.FC = () => {
         document.body.classList.remove('vhs-page-effect');
     };
 
-    // Fonction pour scroller vers la nouvelle section
     const scrollToSection = () => {
         const section = document.getElementById('my-journey-section');
         if (section) {
@@ -30,7 +29,7 @@ const Home: React.FC = () => {
             <Navbar />
             <div className="px-4 flex flex-col lg:flex-row">
                 <div className="w-full lg:w-1/2 h-auto overflow-hidden lg:mb-0">
-                    <ThreeScene/>
+                    <ThreeScene />
                 </div>
                 <div className="w-full lg:w-1/2 flex flex-col justify-center gap-4">
                     <div className="flex w-full">
@@ -40,9 +39,9 @@ const Home: React.FC = () => {
                                 <CardHeader className="pb-0 pt-2 px-4 justify-between border-b">
                                     <h1 className="font-bold text-lg">\NaClO4</h1>
                                     <div className="flex gap-1 pb-1.5 justify-between">
-                                        <Minus size={16}/>
-                                        <Square size={16}/>
-                                        <X size={16}/>
+                                        <Minus size={16} />
+                                        <Square size={16} />
+                                        <X size={16} />
                                     </div>
                                 </CardHeader>
                                 <CardBody className="flex justify-center items-center py-2">
@@ -53,12 +52,16 @@ const Home: React.FC = () => {
                             </Card>
                         </div>
                         <div className="w-1/4 px-2">
-                            <Card isBlurred
-                                  className="border rounded bg-background/100 max-w-full card-shadow ">
+                            <Card
+                                isBlurred
+                                className="border rounded bg-background/100 max-w-full card-shadow"
+                                onMouseEnter={addVHSEffect}
+                                onMouseLeave={removeVHSEffect}
+                            >
                                 <CardHeader className="pb-0 pt-2 px-4 justify-between border-b">
                                     <div className="flex items-center">
                                         <h1 className="font-bold text-lg mr-2">\parcour</h1>
-                                        <Videotape/>
+                                        <Videotape />
                                     </div>
                                 </CardHeader>
                                 <CardBody className="flex justify-center items-center py-4">
@@ -97,7 +100,7 @@ const Home: React.FC = () => {
                                 <CardHeader className="pb-0 pt-2 px-4 justify-between border-b">
                                     <h1 className="font-bold text-lg">\me</h1>
                                 </CardHeader>
-                                <CardBody className="flex justify-center items-center py-3">
+                                <CardBody className="flex justify-center items-center px-2 py-3">
                                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut jzfjsdbfjkbmlkqdv df</p>
                                 </CardBody>
                             </Card>

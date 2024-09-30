@@ -6,6 +6,8 @@ const ThreeScene = () => {
     const mountRef = useRef(null);
 
     useEffect(() => {
+        const mountElement = mountRef.current;  // Capture the current value of the ref
+
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
         const renderer = new THREE.WebGLRenderer();
@@ -13,7 +15,7 @@ const ThreeScene = () => {
 
         const asciiEffect = new AsciiEffect(renderer, ' .:-+*=%@#s', { invert: true, color: true });
         asciiEffect.setSize(window.innerWidth, window.innerHeight);
-        mountRef.current.appendChild(asciiEffect.domElement);
+        mountElement.appendChild(asciiEffect.domElement);  // Use captured ref value
 
         let object;
         const ambientLight = new THREE.AmbientLight(0xffffff, 0.9);
@@ -56,8 +58,8 @@ const ThreeScene = () => {
         });
 
         const handleResize = () => {
-            const width = mountRef.current.clientWidth;
-            const height = mountRef.current.clientHeight;
+            const width = mountElement.clientWidth;
+            const height = mountElement.clientHeight;
             renderer.setSize(width, height);
             asciiEffect.setSize(width, height);
             camera.aspect = width / height;
@@ -66,7 +68,7 @@ const ThreeScene = () => {
         };
 
         const resizeObserver = new ResizeObserver(handleResize);
-        resizeObserver.observe(mountRef.current);
+        resizeObserver.observe(mountElement);
 
         let animationId;
         const animate = () => {
@@ -97,8 +99,8 @@ const ThreeScene = () => {
             }
             renderer.dispose();
             resizeObserver.disconnect();
-            if (mountRef.current) {
-                mountRef.current.removeChild(asciiEffect.domElement);
+            if (mountElement) {
+                mountElement.removeChild(asciiEffect.domElement);  // Use captured ref value in cleanup
             }
         };
     }, []);
