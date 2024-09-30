@@ -6,8 +6,6 @@ const ThreeScene = () => {
     const mountRef = useRef(null);
 
     useEffect(() => {
-        const mountNode = mountRef.current; // Capture la référence au début de l'effet
-
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
         const renderer = new THREE.WebGLRenderer();
@@ -18,7 +16,7 @@ const ThreeScene = () => {
         asciiEffect.setSize(window.innerWidth, window.innerHeight);
 
         // Ajout de l'AsciiEffect DOM au lieu de renderer.domElement
-        mountNode.appendChild(asciiEffect.domElement); // Utilisation de mountNode
+        mountRef.current.appendChild(asciiEffect.domElement);
 
         let object;
 
@@ -65,8 +63,8 @@ const ThreeScene = () => {
         });
 
         const handleResize = () => {
-            const width = mountNode.clientWidth; // Utilisation de mountNode
-            const height = mountNode.clientHeight;
+            const width = mountRef.current.clientWidth;
+            const height = mountRef.current.clientHeight;
 
             renderer.setSize(width, height);
             asciiEffect.setSize(width, height);
@@ -78,7 +76,7 @@ const ThreeScene = () => {
         };
 
         const resizeObserver = new ResizeObserver(handleResize);
-        resizeObserver.observe(mountNode); // Utilisation de mountNode
+        resizeObserver.observe(mountRef.current);
 
         const animate = () => {
             requestAnimationFrame(animate);
@@ -92,9 +90,8 @@ const ThreeScene = () => {
         animate();
 
         return () => {
-            resizeObserver.disconnect(); // Déconnexion de l'observateur
-            if (mountNode) {
-                mountNode.removeChild(asciiEffect.domElement); // Utilisation de mountNode
+            if (mountRef.current) {
+                mountRef.current.removeChild(asciiEffect.domElement);
             }
         };
     }, []);

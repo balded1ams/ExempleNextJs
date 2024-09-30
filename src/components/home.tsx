@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
-import {Card, CardHeader, CardBody} from "@nextui-org/react";
-import {Minus, Square, X, Videotape } from 'lucide-react';
+import { Card, CardHeader, CardBody } from "@nextui-org/react";
+import { Minus, Square, X, Videotape } from 'lucide-react';
 
 import ThreeScene from "@/components/ThreeScene";
 import Navbar from "@/components/navbar";
@@ -9,7 +9,6 @@ import './home.css';
 import './vhs.css';
 
 const Home: React.FC = () => {
-
     const addVHSEffect = () => {
         document.body.classList.add('vhs-page-effect');
     };
@@ -27,48 +26,20 @@ const Home: React.FC = () => {
     };
 
     return (
-        <div className="min-h-full w-screen bg-slate-900">
-            <Navbar/>
-            <div className="px-4 flex flex-col lg:flex-row">
+        <div className="flex flex-col min-h-screen bg-slate-900">
+            <Navbar />
+            <div className="px-4 pt-16 flex flex-col lg:flex-row">
                 <div className="w-full lg:w-1/2 h-auto overflow-hidden lg:mb-0">
-                    <ThreeScene />
+                    <ThreeScene/>
                 </div>
-                <div className="w-full lg:w-1/2 border overflow-hidden flex flex-col lg:flex-row">
-                    <div className="w-full xl:w-3/4 px-2">
-                        <Card className="border rounded bg-background/100 card-shadow max-w-full">
-                        <CardHeader className="pb-0 pt-2 px-4 justify-between border-b">
-                                <h1 className="font-bold text-lg">\NaClO4</h1>
-                                <div className="flex gap-1 pb-1.5 justify-between">
-                                    <Minus size={16}/>
-                                    <Square size={16}/>
-                                    <X size={16}/>
-                                </div>
-                            </CardHeader>
-                            <CardBody className="flex justify-center items-center py-2">
-                                <h1 className="text-3xl">
-                                    {'Hey, Im'} <span className="chlorate text-4xl">Chlorate</span>
-                                </h1>
-                            </CardBody>
-                        </Card>
-                        <Card isBlurred className="border rounded bg-background/100 max-w-full card-shadow">
-                            <CardHeader className="pb-0 pt-2 px-4 justify-between border-b">
-                                <h1 className="font-bold text-lg">\parcour <Videotape/> </h1>
-                                <div className="flex gap-1 pb-1.5 justify-between">
-                                    <Minus size={16}/>
-                                    <Square size={16}/>
-                                    <X size={16}/>
-                                </div>
-                            </CardHeader>
-                            <CardBody className="flex justify-center items-center py-2">
-
-                            </CardBody>
-                        </Card>
-                        <div>
-                            <Card isBlurred className="border rounded bg-background/100 max-w-full vhs-effect card-shadow"
-                                  onMouseEnter={addVHSEffect}
-                                  onMouseLeave={removeVHSEffect}>
-                                <CardHeader className="pb-0 px-4 justify-between border-b">
-                                    <h1 className="font-bold text-large">\cat </h1>
+                <div className="w-full lg:w-1/2 flex flex-col gap-4">
+                    {/* Première rangée : NaClO4 et Chat */}
+                    <div className="flex w-full">
+                        <div className="w-3/4 px-2">
+                            {/* Card NaClO4 */}
+                            <Card className="border rounded bg-background/100 card-shadow"> {/* Added h-full */}
+                                <CardHeader className="pb-0 pt-2 px-4 justify-between border-b">
+                                    <h1 className="font-bold text-lg">\NaClO4</h1>
                                     <div className="flex gap-1 pb-1.5 justify-between">
                                         <Minus size={16}/>
                                         <Square size={16}/>
@@ -76,24 +47,72 @@ const Home: React.FC = () => {
                                     </div>
                                 </CardHeader>
                                 <CardBody className="flex justify-center items-center py-2">
-                                    <pre className="font-mono whitespace-pre text-sm">
-                                         ╱|、{'\n'}
-                                        (˚ˎ。7{'\n'}
-                                        |、˜〵{'\n'}
-                                        じしˍ,)ノ
-                                    </pre>
+                                    <h1 className="text-3xl">
+                                        {'Hey, Im'} <span className="chlorate text-4xl">Chlorate</span>
+                                    </h1>
                                 </CardBody>
                             </Card>
                         </div>
+                        <div className="w-1/4 px-2">
+                            {/* Card Chat */}
+                            <Card className="border rounded bg-background/100 card-shadow"> {/* Added h-full */}
+                                <CardHeader className="pb-0 pt-2 px-4 justify-between border-b">
+                                    <h1 className="font-bold text-lg">\Cat</h1>
+                                </CardHeader>
+                                <CardBody className="flex justify-center items-center py-2">
+                    <pre className="font-mono whitespace-pre text-sm">
+                         ╱|、{'\n'}
+                        (˚ˎ。7{'\n'}
+                        |、˜〵{'\n'}
+                        じしˍ,)ノ
+                    </pre>
+                                </CardBody>
+                            </Card>
+                        </div>
+                    </div>
 
-                        <button
-                            className="text-white border p-2 rounded"
-                            onClick={scrollToSection}
-                        >
-                            Voir mon parcours
-                        </button>
+                    {/* Deuxième rangée : Parcour et Autre Carte */}
+                    <div className="flex w-full">
+                        <div className="w-1/2 px-2">
+                            {/* Autre Carte */}
+                            <Card
+                                className="border rounded bg-background/100 max-w-full card-shadow h-full"> {/* Added h-full */}
+                                <CardHeader className="pb-0 pt-2 px-4 justify-between border-b">
+                                    <h1 className="font-bold text-lg">Autre Carte</h1>
+                                </CardHeader>
+                                <CardBody className="flex justify-center items-center py-2">
+                                    {/* Content */}
+                                </CardBody>
+                            </Card>
+                        </div>
+                        <div className="w-1/2 px-2">
+                            {/* Card Parcour */}
+                            <Card isBlurred
+                                  className="border rounded bg-background/100 max-w-full card-shadow h-full"> {/* Added h-full */}
+                                <CardHeader className="pb-0 pt-2 px-4 justify-between border-b">
+                                    <div className="flex items-center">
+                                        <h1 className="font-bold text-lg mr-2">\parcour</h1>
+                                        <Videotape/>
+                                    </div>
+                                    <div className="flex gap-1 pb-1.5 justify-between">
+                                        <Minus size={16}/>
+                                        <Square size={16}/>
+                                        <X size={16}/>
+                                    </div>
+                                </CardHeader>
+                                <CardBody className="flex justify-center items-center py-2">
+                                    <button
+                                        className="text-white border p-2 rounded"
+                                        onClick={scrollToSection}
+                                    >
+                                        Voir mon parcours
+                                    </button>
+                                </CardBody>
+                            </Card>
+                        </div>
                     </div>
                 </div>
+
             </div>
 
             <div id="my-journey-section" className="px-4 bg-slate-900">
