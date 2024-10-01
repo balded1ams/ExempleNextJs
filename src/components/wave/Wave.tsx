@@ -35,10 +35,10 @@ const Wave: React.FC = () => {
                 />
 
                 <path
-                    d="M 220,0 C
-                        420,100
-                        20,200
-                        220,300
+                    d="M 200,0 C
+                        400,75
+                        0,145
+                        200,225
                         "
                     id="pinkWave"
                     fill="none"
@@ -46,12 +46,12 @@ const Wave: React.FC = () => {
                     strokeWidth="2"
                 />
                 <use href="#pinkWave"
-                     y="300"/>
+                     y="225"/>
                 <path
-                    d="M 220,600 C
-                        420,700
+                    d="M 200,450 C
+                        400,525
                         700,600
-                        800,500
+                        800,675
                         "
                     id="pinkWave"
                     fill="none"
@@ -60,22 +60,30 @@ const Wave: React.FC = () => {
                 />
 
                 <path
-                    d="M 180,0 C
-                        380,100
-                        -20,200
-                        180,300
+                    d="M 200,0 C
+                        700,87
+                        -214,174
+                        180,261
                         "
                     id="tealWave"
                     fill="none"
                     stroke="teal"
                     strokeWidth="2"
                 />
-                <use href="#tealWave"
-                     y="300"
-                     stroke="teal"/>
                 <path
-                    d="M 180,600 C
-                        380,700
+                    d="M 180,261 C
+                        420,300
+                        -20,375
+                        200,400
+                        "
+                    id="tealWave" // pour la deuxieme et troisieme valaur, faire la moyenne ds deux ancienne.
+                    fill="none"
+                    stroke="teal"
+                    strokeWidth="2"
+                />
+                <path
+                    d="M 180,500 C
+                        380,600
                         700,500
                         800,500
                         "
