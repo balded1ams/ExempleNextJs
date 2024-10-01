@@ -26,7 +26,7 @@ const Home: React.FC = () => {
     };
 
     return (
-        <div className="flex flex-col min-h-screen bg-slate-900">
+        <div className="flex flex-col min-h-screen w-screen bg-slate-900">
             <Navbar/>
             <Wave/>
             <div className="px-4 flex flex-col lg:flex-row">
@@ -69,7 +69,7 @@ const Home: React.FC = () => {
                                 <CardBody className="flex justify-center items-center py-4">
                                     <button
                                         className="text-white"
-                                        onClick={scrollToSection}
+                                        onClick={scrollToSection} //TODO: mettre une nouvelle page
                                     >
                                         mon parcours
                                     </button>
@@ -109,24 +109,6 @@ const Home: React.FC = () => {
                         </div>
 
                     </div>
-                </div>
-            </div>
-
-            <div id="my-journey-section" className="px-4 bg-slate-900">
-                <h2 className="text-3xl font-bold text-white mb-4">Mon Parcours</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    <Card className="border rounded bg-background/100 card-shadow backdrop-blur-sm">
-                        <CardBody>
-                            <h3 className="text-xl font-bold">Étape 1</h3>
-                            <p>Voici une description de la première étape de mon parcours.</p>
-                        </CardBody>
-                    </Card>
-                    <Card className="border rounded bg-background/100 card-shadow">
-                        <CardBody>
-                            <h3 className="text-xl font-bold">Étape 2</h3>
-                            <p>Voici une description de la deuxième étape de mon parcours.</p>
-                        </CardBody>
-                    </Card>
                 </div>
             </div>
         </div>
