@@ -73,17 +73,17 @@ const Wave: React.FC = () => {
                 <path
                     d="M 180,261 C
                         420,300
-                        -20,375
+                        168,375
                         200,400
-                        "
+                        " //-20 marchais biena la place de 168 idk y
                     id="tealWave" // pour la deuxieme et troisieme valaur, faire la moyenne ds deux ancienne.
                     fill="none"
                     stroke="teal"
                     strokeWidth="2"
                 />
                 <path
-                    d="M 180,500 C
-                        380,600
+                    d="M 200,400 C
+                        232,430
                         700,500
                         800,500
                         "
