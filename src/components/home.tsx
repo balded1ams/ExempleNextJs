@@ -5,8 +5,9 @@ import { Minus, Square, X, Videotape } from 'lucide-react';
 
 import ThreeScene from "@/components/ThreeScene";
 import Navbar from "@/components/navbar";
-import './home.css';
-import './vhs.css';
+import Wave from "@/components/wave/Wave"
+import './globalcss/home.css';
+import './globalcss/vhs.css';
 
 const Home: React.FC = () => {
     const addVHSEffect = () => {
@@ -26,16 +27,18 @@ const Home: React.FC = () => {
 
     return (
         <div className="flex flex-col min-h-screen bg-slate-900">
-            <Navbar />
+            <Navbar/>
+            <Wave/>
             <div className="px-4 flex flex-col lg:flex-row">
                 <div className="w-full lg:w-1/2 h-auto overflow-hidden lg:mb-0">
                     <ThreeScene />
                 </div>
-                <div className="w-full lg:w-1/2 flex flex-col justify-center gap-4">
+                <div className="w-full lg:w-1/2 flex flex-col justify-center gap-4 z-40">
                     <div className="flex w-full">
                         <div className="w-3/4 px-2">
                             {/* Card NaClO4 */}
-                            <Card className="border rounded bg-background/100 card-shadow ">
+                            <Card
+                                className="border rounded bg-background/100 card-shadow backdrop-blur-sm">
                                 <CardHeader className="pb-0 pt-2 px-4 justify-between border-b">
                                     <h1 className="font-bold text-lg">\NaClO4</h1>
                                     <div className="flex gap-1 pb-1.5 justify-between">
@@ -53,8 +56,7 @@ const Home: React.FC = () => {
                         </div>
                         <div className="w-1/4 px-2">
                             <Card
-                                isBlurred
-                                className="border rounded bg-background/100 max-w-full card-shadow"
+                                className="border rounded bg-background/100 max-w-full card-shadow backdrop-blur-sm"
                                 onMouseEnter={addVHSEffect}
                                 onMouseLeave={removeVHSEffect}
                             >
@@ -80,7 +82,7 @@ const Home: React.FC = () => {
                     <div className="flex w-full">
                         <div className="w-1/4 px-2">
                             {/* Card Chat */}
-                            <Card className="border rounded bg-background/100 card-shadow">
+                            <Card className="border rounded bg-background/100 card-shadow backdrop-blur-sm">
                                 <CardHeader className="pb-0 pt-2 px-4 justify-between border-b">
                                     <h1 className="font-bold text-lg">\Cat</h1>
                                 </CardHeader>
@@ -96,7 +98,7 @@ const Home: React.FC = () => {
                         </div>
                         <div className="w-3/4 px-2">
                             {/* Autre Carte */}
-                            <Card className="border rounded bg-background/100 max-w-full card-shadow ">
+                            <Card className="border rounded bg-background/100 max-w-full card-shadow backdrop-blur-sm">
                                 <CardHeader className="pb-0 pt-2 px-4 justify-between border-b">
                                     <h1 className="font-bold text-lg">\me</h1>
                                 </CardHeader>
@@ -113,7 +115,7 @@ const Home: React.FC = () => {
             <div id="my-journey-section" className="px-4 bg-slate-900">
                 <h2 className="text-3xl font-bold text-white mb-4">Mon Parcours</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    <Card className="border rounded bg-background/100 card-shadow">
+                    <Card className="border rounded bg-background/100 card-shadow backdrop-blur-sm">
                         <CardBody>
                             <h3 className="text-xl font-bold">Étape 1</h3>
                             <p>Voici une description de la première étape de mon parcours.</p>
