@@ -12,7 +12,7 @@ const Wave: React.FC = () => {
             // Ajuste la hauteur du SVG et de la viewBox
             if (height > 800) {
                 setVerticalScale(1.5);
-                setSvgHeight(900);
+                setSvgHeight(800);
                 setViewBoxHeight(1000);
             } else {
                 setVerticalScale(1);
