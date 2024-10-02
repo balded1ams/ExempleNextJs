@@ -2,6 +2,7 @@
 import React from 'react';
 import { Card, CardHeader, CardBody } from "@nextui-org/react";
 import { Minus, Square, X, Videotape } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 import ThreeScene from "@/components/ThreeScene";
 import Navbar from "@/components/navbar";
@@ -10,6 +11,7 @@ import './globalcss/home.css';
 import './globalcss/vhs.css';
 
 const Home: React.FC = () => {
+
     const addVHSEffect = () => {
         document.body.classList.add('vhs-page-effect');
     };
@@ -18,12 +20,6 @@ const Home: React.FC = () => {
         document.body.classList.remove('vhs-page-effect');
     };
 
-    const scrollToSection = () => {
-        const section = document.getElementById('my-journey-section');
-        if (section) {
-            section.scrollIntoView({ behavior: 'smooth' });
-        }
-    };
 
     return (
         <div className="flex flex-col min-h-screen w-screen bg-slate-900">
@@ -67,12 +63,12 @@ const Home: React.FC = () => {
                                     </div>
                                 </CardHeader>
                                 <CardBody className="flex justify-center items-center py-4">
-                                    <button
+                                    <Link
                                         className="text-white"
-                                        onClick={scrollToSection} //TODO: mettre une nouvelle page
+                                        to="/profile"
                                     >
                                         mon parcours
-                                    </button>
+                                    </Link>
                                 </CardBody>
                             </Card>
                         </div>
@@ -107,7 +103,6 @@ const Home: React.FC = () => {
                                 </CardBody>
                             </Card>
                         </div>
-
                     </div>
                 </div>
             </div>
