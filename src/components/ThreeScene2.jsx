@@ -1,55 +1,102 @@
+'use client'
 import React, { useEffect, useRef } from 'react';
 import * as THREE from 'three';
+import { MTLLoader, OBJLoader, AsciiEffect } from 'three-stdlib';
 
 const ThreeScene2 = () => {
     const mountRef = useRef(null);
 
     useEffect(() => {
         const mountElement = mountRef.current;
+
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
         const renderer = new THREE.WebGLRenderer();
         renderer.setSize(window.innerWidth, window.innerHeight);
-        mountElement.appendChild(renderer.domElement);
 
-        // Ajouter un autre objet, par exemple une sphère
-        const geometry = new THREE.SphereGeometry(15, 32, 32);
-        const material = new THREE.MeshStandardMaterial({ color: 0x00ff00 });
-        const sphere = new THREE.Mesh(geometry, material);
-        scene.add(sphere);
+        const asciiEffect = new AsciiEffect(renderer, ' 10', { invert: true, color: true });
+        asciiEffect.setSize(window.innerWidth, window.innerHeight);
+        mountElement.appendChild(asciiEffect.domElement);
 
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.9);
+        let object;
+        const ambientLight = new THREE.AmbientLight(0xffffff, 1);
         scene.add(ambientLight);
 
-        camera.position.z = 50;
 
-        let animationId;
-        const animate = () => {
-            animationId = requestAnimationFrame(animate);
-            sphere.rotation.y += 0.01;
-            renderer.render(scene, camera);
-        };
-        animate();
+        const mtlLoader = new MTLLoader();
+        mtlLoader.load('/kassette.mtl', (materials) => {
+            materials.preload();
+
+            const objLoader = new OBJLoader();
+            objLoader.setMaterials(materials);
+            objLoader.load('/kassette.obj', (loadedObject) => {
+                object = loadedObject;
+                scene.add(object);
+                const textureLoader = new THREE.TextureLoader();
+                const colorMap = textureLoader.load('', () => applyTextures());
+
+                const applyTextures = () => {
+                    object.traverse((child) => {
+                        if (child.isMesh) {
+                            if (child.material instanceof THREE.MeshPhysicalMaterial) {
+                                child.material.map = colorMap;
+                                child.material.needsUpdate = true;
+                            } else {
+                                child.material = new THREE.MeshPhysicalMaterial({
+                                    map: colorMap,
+                                });
+                                child.material.needsUpdate = true;
+                            }
+                        }
+                    });
+                };
+            });
+        });
 
         const handleResize = () => {
             const width = mountElement.clientWidth;
             const height = mountElement.clientHeight;
             renderer.setSize(width, height);
+            asciiEffect.setSize(width, height);
             camera.aspect = width / height;
             camera.updateProjectionMatrix();
+            camera.position.z = 1;
         };
 
-        window.addEventListener('resize', handleResize);
+        const resizeObserver = new ResizeObserver(handleResize);
+        resizeObserver.observe(mountElement);
+
+        let animationId;
+        const animate = () => {
+            animationId = requestAnimationFrame(animate);
+            if (object) {
+                object.rotation.x += 0.01;
+                object.rotation.y += 0.01;
+            }
+            asciiEffect.render(scene, camera);
+        };
+
+        animate();
 
         return () => {
             cancelAnimationFrame(animationId);
-            window.removeEventListener('resize', handleResize);
+            if (object) {
+                scene.remove(object);
+                object.traverse((child) => {
+                    if (child.isMesh) {
+                        child.geometry.dispose();
+                        if (Array.isArray(child.material)) {
+                            child.material.forEach((mtrl) => mtrl.dispose());
+                        } else {
+                            child.material.dispose();
+                        }
+                    }
+                });
+            }
             renderer.dispose();
-            scene.remove(sphere);
-            if (sphere.geometry) sphere.geometry.dispose();
-            if (sphere.material) sphere.material.dispose();
+            resizeObserver.disconnect();
             if (mountElement) {
-                mountElement.removeChild(renderer.domElement);
+                mountElement.removeChild(asciiEffect.domElement);
             }
         };
     }, []);
