@@ -1,12 +1,14 @@
 'use client';
 import React from 'react';
 import { Card, CardHeader, CardBody } from "@nextui-org/react";
-import { Minus, Square, X, Videotape } from 'lucide-react';
+import { Minus, Square, X, Videotape} from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 import ThreeScene from "@/components/ThreeScene";
 import Navbar from "@/components/navbar";
 import Wave from "@/components/wave/Wave"
+import Icons from "@/components/Icons";
+
 import './globalcss/home.css';
 import './globalcss/vhs.css';
 
@@ -98,8 +100,8 @@ const Home: React.FC = () => {
                                 <CardHeader className="pb-0 pt-2 px-4 justify-between border-b">
                                     <h1 className="font-bold text-lg">\me</h1>
                                 </CardHeader>
-                                <CardBody className="flex justify-center items-center px-2 py-3">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut jzfjsdbfjkbmlkqdv df</p>
+                                <CardBody className="flex  px-2 py-3">
+                                    <Icons/>
                                 </CardBody>
                             </Card>
                         </div>
