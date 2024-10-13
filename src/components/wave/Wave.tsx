@@ -48,17 +48,8 @@ const Wave: React.FC = () => {
                     strokeWidth="2"
                 />
                 <use href="#base" y={300 * verticalScale}/>
-                <path
-                    d={`M 200,${600 * verticalScale} C
-                        400,${700 * verticalScale}
-                        700,${550 * verticalScale}
-                        700,${500 * verticalScale}
-                        `}
-                    id="base"
-                    fill="none"
-                    stroke="black"
-                    strokeWidth="2"
-                />
+                <use href="#base" y={600 * verticalScale}/>
+
 
                 <path
                     d={`M 200,0 C
@@ -72,17 +63,8 @@ const Wave: React.FC = () => {
                     strokeWidth="2"
                 />
                 <use href="#pinkWave" y={225 * verticalScale}/>
-                <path
-                    d={`M 200,${450 * verticalScale} C
-                        400,${525 * verticalScale}
-                        700,${600 * verticalScale}
-                        800,${675 * verticalScale}
-                        `}
-                    id="pinkWave"
-                    fill="none"
-                    stroke="pink"
-                    strokeWidth="2"
-                />
+                <use href="#pinkWave" y={225*2 * verticalScale}/>
+
 
                 <path
                     d={`M 200,0 C
@@ -106,17 +88,7 @@ const Wave: React.FC = () => {
                     stroke="teal"
                     strokeWidth="2"
                 />
-                <path
-                    d={`M 200,${400 * verticalScale} C
-                        232,${430 * verticalScale}
-                        700,${500 * verticalScale}
-                        800,${500 * verticalScale}
-                        `}
-                    id="tealWave"
-                    fill="none"
-                    stroke="teal"
-                    strokeWidth="2"
-                />
+
             </svg>
         </div>
     );

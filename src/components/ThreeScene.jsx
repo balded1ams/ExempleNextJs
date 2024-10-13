@@ -8,7 +8,6 @@ const ThreeScene = () => {
 
     useEffect(() => {
         const mountElement = mountRef.current;  // Capture the current value of the ref
-
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
         const renderer = new THREE.WebGLRenderer();
@@ -16,8 +15,9 @@ const ThreeScene = () => {
 
         const asciiEffect = new AsciiEffect(renderer, ' .:-+*=%@#s', { invert: true, color: true });
         asciiEffect.setSize(window.innerWidth, window.innerHeight);
-        mountElement.appendChild(asciiEffect.domElement);  // Use captured ref value
-
+        if (mountElement && asciiEffect.domElement) {
+            mountElement.appendChild(asciiEffect.domElement);
+        }
         let object;
         const ambientLight = new THREE.AmbientLight(0xffffff, 0.9);
         scene.add(ambientLight);
