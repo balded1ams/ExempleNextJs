@@ -19,7 +19,7 @@ const ThreeScene = () => {
             mountElement.appendChild(asciiEffect.domElement);
         }
         let object;
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.9);
+        const ambientLight = new THREE.AmbientLight(0xffffff, 7);
         scene.add(ambientLight);
 
         const directionalLight2 = new THREE.DirectionalLight(0xffffff, 1);

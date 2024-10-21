@@ -1,5 +1,5 @@
 import React from 'react';
-import Parcour from '@/components/parcour';
+import Parcour from '@/components/parcours/parcour';
 
 const ParcourPage: React.FC = () => {
     return (

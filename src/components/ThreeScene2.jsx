@@ -11,7 +11,11 @@ const ThreeScene2 = () => {
 
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer();
+        camera.position.z = 1;
+
+        // Optimize the renderer
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setPixelRatio(window.devicePixelRatio);
         renderer.setSize(window.innerWidth, window.innerHeight);
 
         const asciiEffect = new AsciiEffect(renderer, ' 10', { invert: true, color: true });
@@ -19,9 +23,8 @@ const ThreeScene2 = () => {
         mountElement.appendChild(asciiEffect.domElement);
 
         let object;
-        const ambientLight = new THREE.AmbientLight(0xffffff, 1);
+        const ambientLight = new THREE.AmbientLight(0xffffff, 10);
         scene.add(ambientLight);
-
 
         const mtlLoader = new MTLLoader();
         mtlLoader.load('/kassette.mtl', (materials) => {
@@ -32,21 +35,17 @@ const ThreeScene2 = () => {
             objLoader.load('/kassette.obj', (loadedObject) => {
                 object = loadedObject;
                 scene.add(object);
+
                 const textureLoader = new THREE.TextureLoader();
                 const colorMap = textureLoader.load('', () => applyTextures());
 
                 const applyTextures = () => {
                     object.traverse((child) => {
                         if (child.isMesh) {
-                            if (child.material instanceof THREE.MeshPhysicalMaterial) {
-                                child.material.map = colorMap;
-                                child.material.needsUpdate = true;
-                            } else {
-                                child.material = new THREE.MeshPhysicalMaterial({
-                                    map: colorMap,
-                                });
-                                child.material.needsUpdate = true;
-                            }
+                            child.material = new THREE.MeshPhysicalMaterial({
+                                map: colorMap,
+                            });
+                            child.material.needsUpdate = true;
                         }
                     });
                 };
@@ -60,10 +59,9 @@ const ThreeScene2 = () => {
             asciiEffect.setSize(width, height);
             camera.aspect = width / height;
             camera.updateProjectionMatrix();
-            camera.position.z = 1;
         };
 
-        const resizeObserver = new ResizeObserver(handleResize);
+        const resizeObserver = new ResizeObserver(() => handleResize());
         resizeObserver.observe(mountElement);
 
         let animationId;
@@ -80,8 +78,9 @@ const ThreeScene2 = () => {
 
         return () => {
             cancelAnimationFrame(animationId);
+            resizeObserver.disconnect();
+
             if (object) {
-                scene.remove(object);
                 object.traverse((child) => {
                     if (child.isMesh) {
                         child.geometry.dispose();
@@ -92,16 +91,14 @@ const ThreeScene2 = () => {
                         }
                     }
                 });
+                scene.remove(object);
             }
             renderer.dispose();
-            resizeObserver.disconnect();
-            if (mountElement) {
-                mountElement.removeChild(asciiEffect.domElement);
-            }
+            mountElement.removeChild(asciiEffect.domElement);
         };
     }, []);
 
-    return <div ref={mountRef} />;
+    return <div ref={mountRef} style={{ width: '100%', height: '100vh' }} />;
 };
 
 export default ThreeScene2;

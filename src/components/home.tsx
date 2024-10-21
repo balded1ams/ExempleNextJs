@@ -48,7 +48,7 @@ const Home: React.FC = () => {
                                     </div>
                                 </CardHeader>
                                 <CardBody className="flex justify-center items-center py-4">
-                                    <Link href="/profile" className="text-white">
+                                    <Link href="/parcour" className="text-white">
                                         mon parcours
                                     </Link>
                                 </CardBody>
