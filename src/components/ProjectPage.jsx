@@ -1,16 +1,10 @@
-import Image from 'next/image';
+import React from "react";
 
-const ProjectPage = ({ title, imageUrl, description }) => {
+const ProjectPage = ({ title, description }) => {
     return (
-        <div className="min-h-screen bg-slate-800 text-white">
+
+        <div className="min-h-screen bg-slate-900 text-white pt-20">
             <div className="relative w-full h-64 md:h-96">
-                <Image
-                    src={imageUrl}
-                    alt={title}
-                    layout="fill"
-                    objectFit="cover"
-                    className="brightness-50"
-                />
                 <div className="absolute inset-0 flex items-center justify-center">
                     <h1 className="text-4xl md:text-6xl font-bold">{title}</h1>
                 </div>

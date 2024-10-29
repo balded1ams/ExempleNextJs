@@ -1,105 +1,55 @@
-import { Card, CardHeader, CardBody } from "@nextui-org/react";
-import { Minus, Square, X, Videotape } from 'lucide-react';
-import Link from 'next/link';
-import React from "react";
+import { Card, CardBody, Input, Textarea, Divider, Button } from "@nextui-org/react";
 
-import ThreeScene from "@/components/ThreeScene";
 import Navbar from "@/components/navbar";
-import Wave from "@/components/wave/Wave";
-import Icons from "@/components/Icons";
 
-import './globalcss/home.css';
-import './globalcss/vhs.css';
+import React, { useState } from "react";
 
 const Home: React.FC = () => {
+    const [project, setProject] = useState<{ title: string; description: string; } | null>(null);
+    const [title, setTitle] = useState<string>(""); // Ajout d'un état pour le titre
+    const [description, setDescription] = useState<string>(""); // Ajout d'un état pour la description
+
+    const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        setProject({ title, description });
+    };
+
     return (
-        <div className="flex flex-col min-h-screen w-screen bg-slate-900 text-white">
+        <div className="min-h-screen w-screen bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
             <Navbar />
-            <Wave />
-            <div className="flex flex-col lg:flex-row flex-grow overflow-hidden">
-                <div className="w-full lg:w-1/2 h-auto overflow-hidden lg:mb-0">
-                    <ThreeScene />
-                </div>
-                <div className="w-full lg:w-1/2 flex flex-col justify-center gap-4 z-40 overflow-y-auto overflow-visible h-screen">
-                    <div className="flex w-full">
-                        <div className="w-3/4 px-2">
-                            <Card className="border rounded bg-background/100 card-shadow backdrop-blur-sm">
-                                <CardHeader className="pb-0 pt-2 px-4 justify-between border-b">
-                                    <h1 className="font-bold text-lg">\NaClO4</h1>
-                                    <div className="flex gap-1 pb-1.5 justify-between">
-                                        <Minus size={16} />
-                                        <Square size={16} />
-                                        <X size={16} />
-                                    </div>
-                                </CardHeader>
-                                <CardBody className="flex justify-center items-center py-2">
-                                    <h1 className="text-3xl">
-                                        {'Hey, Im'} <span className="chlorate text-4xl">Chlorate</span>
-                                    </h1>
-                                </CardBody>
-                            </Card>
-                        </div>
-                        <div className="w-1/4 px-2">
-                            <Card className="border rounded bg-background/100 max-w-full card-shadow backdrop-blur-sm">
-                                <CardHeader className="pb-0 pt-2 px-4 justify-between border-b">
-                                    <div className="flex items-center">
-                                        <h1 className="font-bold text-lg mr-2">\parcour</h1>
-                                        <Videotape />
-                                    </div>
-                                </CardHeader>
-                                <CardBody className="flex justify-center items-center py-4">
-                                    <Link href="/parcour" className="text-white">
-                                        mon parcours
-                                    </Link>
-                                </CardBody>
-                            </Card>
-                        </div>
+            <div className="pt-20 p-4 max-w-2xl mx-auto">
+                <h1 className="text-3xl font-bold mb-6 text-center">Submit a Project</h1>
+                {!project ? (
+                    <Card className="p-6 rounded-lg border dark:border-gray-500 border-gray-200 bg-gray-200 dark:bg-darkGray">
+                        <CardBody className="flex flex-col items-center">
+                            <form onSubmit={handleFormSubmit} className="space-y-4">
+                                <Input
+                                    label=""
+                                    placeholder="Enter project title"
+                                    value={title}
+                                    onChange={(e) => setTitle(e.target.value)}
+                                    className="bg-gray-200 dark:bg-gray-700 text-white dark:text-black"
+                                />
+                                <Divider />
+                                <Textarea
+                                    label="Description"
+                                    placeholder="Enter your description"
+                                    value={description}
+                                    onChange={(e) => setDescription(e.target.value)}
+                                    className="bg-gray-200 dark:bg-gray-700 text-black dark:text-white"
+                                />
+                                <Button type="submit" className="bg-blue-500 hover:bg-blue-600 text-white">
+                                    Submit
+                                </Button>
+                            </form>
+                        </CardBody>
+                    </Card>
+                ) : (
+                    <div className="space-y-4">
+                        <h2 className="text-2xl font-bold">{project.title}</h2>
+                        <p>{project.description}</p>
                     </div>
-
-                    {/* Deuxième rangée : Parcour et Autre Carte */}
-                    <div className="flex w-full">
-                        <div className="w-1/4 px-2">
-                            {/* Card Chat */}
-                            <Card className="border rounded bg-background/100 card-shadow backdrop-blur-sm">
-                                <CardHeader className="pb-0 pt-2 px-4 justify-between border-b">
-                                    <h1 className="font-bold text-lg">\Cat</h1>
-                                </CardHeader>
-                                <CardBody className="flex justify-center items-center py-2">
-                                    <pre className="font-mono whitespace-pre text-sm">
-                                         ╱|、{'\n'}
-                                        (˚ˎ。7{'\n'}
-                                        |、˜〵{'\n'}
-                                        じしˍ,)ノ
-                                    </pre>
-                                </CardBody>
-                            </Card>
-                        </div>
-                        <div className="w-3/4 px-2">
-                            {/* Autre Carte */}
-                            <Card className="border rounded bg-background/100 max-w-full card-shadow backdrop-blur-sm">
-                                <CardHeader className="pb-0 pt-2 px-4 justify-between border-b">
-                                    <h1 className="font-bold text-lg">\me</h1>
-                                </CardHeader>
-                                <CardBody className="flex  px-2 py-3">
-                                    <Icons />
-                                </CardBody>
-                            </Card>
-                        </div>
-                    </div>
-
-                    <div className="flex flex-col gap-4">
-                        {[...Array(3)].map((_, index) => (
-                            <Card key={index} className="border rounded bg-background/100 card-shadow backdrop-blur-sm">
-                                <CardHeader className="pb-0 pt-2 px-4 justify-between border-b">
-                                    <h1 className="font-bold text-lg">Placeholder Card {index + 1}</h1>
-                                </CardHeader>
-                                <CardBody className="flex justify-center items-center py-2">
-                                    <p>Contenu de la carte placeholder</p>
-                                </CardBody>
-                            </Card>
-                        ))}
-                    </div>
-                </div>
+                )}
             </div>
         </div>
     );
